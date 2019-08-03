@@ -152,7 +152,7 @@ void loop () {
         delay(10);
         lcd.print(DHT.temperature);
 
-        delay(5000);
+        delay(3000);
 
         lcd.clear();
         
