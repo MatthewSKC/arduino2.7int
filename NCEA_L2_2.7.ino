@@ -1,92 +1,81 @@
-/* www.learningbuz.com */
-/*Impport following Libraries*/
-#include <Wire.h> 
-#include <LiquidCrystal_I2C.h>
+#include <Wire.h>                 // Wire.h is a first party libary
+#include <LiquidCrystal_I2C.h>    // LiquidCrystal_I2C.h is a third party libary for LCD over serial communication
 
-//I2C pins declaration
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+#define key1 22
+#define key2 28
+#define key3 24
+#define key4 26
 
-void setup() 
-{
-    lcd.begin(16,2); //Defining 16 columns and 2 rows of lcd display
-    lcd.backlight(); //To Power ON the back light
-    //lcd.backlight(); // To Power OFF the back light
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);    //I2C pins declaration
 
-    pinMode(22, INPUT_PULLUP);
-    pinMode(24, INPUT_PULLUP);
-    pinMode(26, INPUT_PULLUP);
-    pinMode(28, INPUT_PULLUP);
+void setup(){
 
-    Serial.begin(9600);
+  lcd.begin(16,2); //Defining 16 columns and 2 rows of lcd display
+  lcd.backlight(); //To Power ON the back light
+  
+  Serial.begin(9600);
 
-    delay(100);
+  pinMode(key1, INPUT_PULLUP); // setting pins to only take input
+  pinMode(key2, INPUT_PULLUP);
+  pinMode(key3, INPUT_PULLUP);
+  pinMode(key4, INPUT_PULLUP);
 
-    digitalWrite(22, LOW);
-    digitalWrite(24, LOW);
-    digitalWrite(26, LOW);
-    digitalWrite(28, LOW);
+  lcd.clear(); //clearing the LCD screen
+
 }
+void loop () {
 
-void loop() 
-{
-    //Write your code
+  lcd.setCursor(0,0); //Defining positon to write from first row,first column .
+  
+  int key1S = digitalRead(key1); // read if key 1 is pressed
+  int key2S = digitalRead(key2); // read if key 2 is pressed
+  int key3S = digitalRead(key3); // read if key 3 is pressed
+  int key4S = digitalRead(key4); // read if key 4 is pressed
 
-    lcd.setCursor(0,0); //Defining positon to write from first row,first column .
-    lcd.clear();
+      if(!key1S) {
 
-    if (digitalRead(22) == HIGH) {
+        Serial.println("Key 1 has been pressed");
         lcd.clear();
-        lcd.setCursor(0,0);
 
         delay(100);
 
-        lcd.print("INPUT A");
+        lcd.print("Time");
 
-        delay(100);
+      }
 
-        Serial.println("A");
-        digitalWrite(22, LOW);
-    }
+      if(!key2S) {
 
-    if (digitalRead(24) == HIGH) {
+        Serial.println("Key 2 has been pressed");
         lcd.clear();
-        lcd.setCursor(0,0);
+
 
         delay(100);
 
-        lcd.print("INPUT B");
-        Serial.println("B");
+        lcd.print("Due Dates");
 
-        delay(100);
+      }
 
-        digitalWrite(24, LOW);
-    }
+      if(!key3S) {
 
-    if (digitalRead(26) == HIGH) {
+        Serial.println("Key 3 has been pressed");
         lcd.clear();
-        lcd.setCursor(0,0);
 
         delay(100);
 
-        lcd.print("INPUT C");
-        Serial.println("C");
+        lcd.print("Tempurature");
 
-        delay(100);
+      }
 
-        digitalWrite(26, LOW);
-    }
+      if(!key4S) {
 
-    if (digitalRead(28) == HIGH) {
+        Serial.println("Key 4 has been pressed");
         lcd.clear();
-        lcd.setCursor(0,0);
 
         delay(100);
 
-        lcd.print("INPUT D");
-        Serial.println("D");
+        lcd.print("reset .. idk");
 
-        delay(100);
-        
-        digitalWrite(28, LOW);
-    }
+      }
+    
+  delay(10);
 }
