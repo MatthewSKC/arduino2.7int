@@ -36,61 +36,68 @@ void loop () {
   int key3S = digitalRead(key3); // read if key 3 is pressed
   int key4S = digitalRead(key4); // read if key 4 is pressed
 
-  if(!key1S) {
-    
-    Serial.println("Key 1 has been pressed");
-    lcd.clear();
+      if(!key1S) {
 
-    delay(100);
-    
-    lcd.print("Time");
-    
-  }
-  if(!key2S) {
-    
-    Serial.println("Key 2 has been pressed");
-    lcd.clear();
+        Serial.println("Key 1 has been pressed");
+        lcd.clear();
 
+        delay(100);
 
-    delay(100);
-  
-    lcd.print("Due Dates");
-  
-  }
-  
-  if(!key3S) {
-    
-    Serial.println("Key 3 has been pressed");
-    lcd.clear();
+        lcd.print("Time");
 
-    delay(100);
+      }
+      if(!key2S) {
 
-    lcd.print("Temperature (C)");
-    lcd.setCursor(0,1);
-    
-    delay(1);
-    
-    lcd.print(DHT.temperature);
-    
-  }
-
-  if(!key4S) {
-    
-    Serial.println("Key 4 has been pressed");
+        Serial.println("Key 2 has been pressed");
         lcd.clear();
 
 
-    delay(100);
+        delay(100);
 
-    lcd.print("reset .. idk");
-    
-  }
-  delay(5000);
+        lcd.print("Due Dates");
 
-  int chk = DHT.read11(DHT11_PIN);
-  Serial.print("Temperature = ");
-  Serial.println(DHT.temperature);
-  Serial.print("Humidity = ");
-  Serial.println(DHT.humidity);
+      }
+
+      if(!key3S) {
+        
+        lcd.clear();
+        lcd.print("Loading...");
+        
+        delay(1500);    // refer: https://github.com/MatthewSKC/arduino2.7int/commit/ad28c4e75fe6ab158ba2342b5c18635478b1f083
+
+        int chk = DHT.read11(DHT11_PIN);    //takes measurements from temperature sensor
+
+        delay(10);
+
+        Serial.print("Temperature = ");
+        Serial.println(DHT.temperature);
+        Serial.print("Humidity = ");
+        Serial.println(DHT.humidity);
+        Serial.println("Key 3 has been pressed");
+
+        lcd.clear();
+
+        delay(100);
+
+        lcd.print("Temperature (C)");
+        lcd.setCursor(0,1);
+        delay(10);
+        lcd.print(DHT.temperature);
+        
+      }
+
+      if(!key4S) {
+
+        Serial.println("Key 4 has been pressed");
+            lcd.clear();
+
+
+        delay(100);
+
+        lcd.print("reset .. idk");
+
+      }
+  
+  delay(100);
 
 }
