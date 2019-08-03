@@ -60,9 +60,12 @@ void loop () {
 
       if(!key3S) {
         
-        delay(1500);
+        lcd.clear();
+        lcd.print("Loading...");
+        
+        delay(1500);    // refer: https://github.com/MatthewSKC/arduino2.7int/commit/ad28c4e75fe6ab158ba2342b5c18635478b1f083
 
-        int chk = DHT.read11(DHT11_PIN);
+        int chk = DHT.read11(DHT11_PIN);    //takes measurements from temperature sensor
 
         delay(10);
 
