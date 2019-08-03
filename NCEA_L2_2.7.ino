@@ -8,6 +8,10 @@
 
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);    //I2C pins declaration
 
+#include <dht.h>
+dht DHT;
+#define DHT11_PIN 2
+
 void setup(){
 
   lcd.begin(16,2); //Defining 16 columns and 2 rows of lcd display
@@ -24,7 +28,7 @@ void setup(){
 
 }
 void loop () {
-
+  
   lcd.setCursor(0,0); //Defining positon to write from first row,first column .
   
   int key1S = digitalRead(key1); // read if key 1 is pressed
@@ -32,50 +36,61 @@ void loop () {
   int key3S = digitalRead(key3); // read if key 3 is pressed
   int key4S = digitalRead(key4); // read if key 4 is pressed
 
-      if(!key1S) {
-
-        Serial.println("Key 1 has been pressed");
-        lcd.clear();
-
-        delay(100);
-
-        lcd.print("Time");
-
-      }
-
-      if(!key2S) {
-
-        Serial.println("Key 2 has been pressed");
-        lcd.clear();
-
-
-        delay(100);
-
-        lcd.print("Due Dates");
-
-      }
-
-      if(!key3S) {
-
-        Serial.println("Key 3 has been pressed");
-        lcd.clear();
-
-        delay(100);
-
-        lcd.print("Tempurature");
-
-      }
-
-      if(!key4S) {
-
-        Serial.println("Key 4 has been pressed");
-        lcd.clear();
-
-        delay(100);
-
-        lcd.print("reset .. idk");
-
-      }
+  if(!key1S) {
     
-  delay(10);
+    Serial.println("Key 1 has been pressed");
+    lcd.clear();
+
+    delay(100);
+    
+    lcd.print("Time");
+    
+  }
+  if(!key2S) {
+    
+    Serial.println("Key 2 has been pressed");
+    lcd.clear();
+
+
+    delay(100);
+  
+    lcd.print("Due Dates");
+  
+  }
+  
+  if(!key3S) {
+    
+    Serial.println("Key 3 has been pressed");
+    lcd.clear();
+
+    delay(100);
+
+    lcd.print("Temperature (C)");
+    lcd.setCursor(0,1);
+    
+    delay(1);
+    
+    lcd.print(DHT.temperature);
+    
+  }
+
+  if(!key4S) {
+    
+    Serial.println("Key 4 has been pressed");
+        lcd.clear();
+
+
+    delay(100);
+
+    lcd.print("reset .. idk");
+    
+  }
+  delay(5000);
+
+  int chk = DHT.read11(DHT11_PIN);
+  Serial.print("Temperature = ");
+  Serial.println(DHT.temperature);
+  Serial.print("Humidity = ");
+  Serial.println(DHT.humidity);
+
 }
