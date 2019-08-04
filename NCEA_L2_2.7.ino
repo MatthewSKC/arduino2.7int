@@ -2,6 +2,8 @@
 #include <LiquidCrystal_I2C.h>    // LiquidCrystal_I2C.h is a third party libary for LCD over serial communication
 #include <dht.h>                  // dht.h is for the humidity temperature module (Third Party)
 #include "RTClib.h"               // RTCLib.h is a third party libary for getting the time
+#include <SPI.h>                  // SPI.h is first party libary
+#include <SD.h>                   // SD Card Module libary (1st Party)
 
 #define key1 22   // Key 1 (Membrane Keyboard)
 #define key2 28   // Key 2 (Membrane Keyboard)
@@ -17,20 +19,25 @@ dht DHT;    // start DHT Module
 RTC_DS1307 rtc;   // start rtc module
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};   //RTC Days of the week
 
+File myFile;    // Start SD Card module
+
 void setup(){
 
   lcd.begin(16,2); //Defining 16 columns and 2 rows of lcd display
   lcd.backlight(); //To Power ON the back light
   
   while (!Serial);
-  
-  Serial.begin(9600);   // Start Serial on 9600 Baud    - Temperature Module + Membrane Keyboard
-  Serial.begin(57600);  // Start Serial on 57600 Baud   - RTC Module saying date and time
+ 
+  Serial.begin(57600);  // This is to confirm code is functioning on computer end
   
   pinMode(key1, INPUT_PULLUP); // setting pins to only take input
   pinMode(key2, INPUT_PULLUP);
   pinMode(key3, INPUT_PULLUP);
   pinMode(key4, INPUT_PULLUP);
+
+  pinMode(48, OUTPUT);        // Reset Pin
+
+  digitalWrite(48, LOW);      // Making sure there is no instant reset
 
   lcd.clear(); //clearing the LCD screen
 
@@ -48,6 +55,17 @@ void setup(){
         // rtc.adjust(DateTime(2019, 8, 21, 9, 0, 0));
       }
 
+  myFile.close();   // Closes any open file
+
+  Serial.print("Initializing SD card...");
+
+     if (!SD.begin(53)) {
+       Serial.println("initialization failed!");
+       lcd.print("SD CARD ERROR");
+       while (1);
+      }
+      
+  Serial.println("initialization done.");
 }
 void loop () {
   
@@ -68,7 +86,19 @@ void loop () {
 
         delay(100);
 
-        lcd.print("Time");
+        lcd.print("Time-");
+        lcd.print(now.day(), DEC);
+        lcd.print("/");
+        lcd.print(now.month(), DEC);
+        lcd.print("/");
+        lcd.print(now.year(), DEC);
+
+        Serial.print("Time - ");
+        Serial.print(now.day(), DEC);
+        Serial.print("/");
+        Serial.print(now.month(), DEC);
+        Serial.print("/");
+        Serial.print(now.year(), DEC);
         
         delay(1);
         
@@ -101,6 +131,33 @@ void loop () {
         delay(100);
 
         lcd.print("Due Dates");
+
+        myFile = SD.open("DUEDATES.txt");
+
+        if (myFile) {
+          Serial.println("DUEDATES.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+            
+          lcd.print(myFile.read());
+          Serial.write(myFile.read());
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+        }
+
+      delay(3000);
+
+      lcd.clear();
 
       }
 
@@ -166,7 +223,11 @@ void loop () {
 
         delay(100);
 
-        lcd.print("reset .. idk");
+        lcd.print("Resetting");
+
+        delay(500);
+
+        digitalWrite(48, HIGH);
 
       }
   
