@@ -5,10 +5,10 @@
 #include <SPI.h>                  // SPI.h is first party libary
 #include <SD.h>                   // SD Card Module libary (1st Party)
 
-#define key1 22   // Key 1 (Membrane Keyboard)
-#define key2 28   // Key 2 (Membrane Keyboard)
-#define key3 24   // Key 3 (Membrane Keyboard)
-#define key4 26   // Key 4 (Membrane Keyboard)
+#define key1 22   // Key 1 Function (Membrane Keyboard)
+#define key2 28   // Key 2 Function (Membrane Keyboard)
+#define key3 26   // Key 3 Function (Membrane Keyboard)
+#define key4 24   // Key 4 Function (Membrane Keyboard)
 
 #define DHT11_PIN 2
 
@@ -25,6 +25,12 @@ void setup(){
 
   lcd.begin(16,2); //Defining 16 columns and 2 rows of lcd display
   lcd.backlight(); //To Power ON the back light
+
+  lcd.clear(); //clearing the LCD screen
+
+  lcd.print("Intializing");
+  
+  delay(1000);
   
   while (!Serial);
  
@@ -38,8 +44,6 @@ void setup(){
   pinMode(48, OUTPUT);        // Reset Pin
 
   digitalWrite(48, LOW);      // Making sure there is no instant reset
-
-  lcd.clear(); //clearing the LCD screen
 
       if (! rtc.begin()) {      // Checking for RTC Module
         Serial.println("Couldn't find RTC");
@@ -60,12 +64,23 @@ void setup(){
   Serial.print("Initializing SD card...");
 
      if (!SD.begin(53)) {
+      
        Serial.println("initialization failed!");
+       
+       lcd.clear();
+
+       delay(200);
+       
        lcd.print("SD CARD ERROR");
+       
        while (1);
+       
       }
       
   Serial.println("initialization done.");
+
+  lcd.clear(); //clearing the LCD screen
+  
 }
 void loop () {
   
@@ -160,6 +175,11 @@ void loop () {
         else {
         // if the file didn't open, print an error:
         Serial.println("error opening DUEDATES.txt");
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
         }
 
       delay(3000);
@@ -170,31 +190,10 @@ void loop () {
 
       if(!key3S) {
         
-        lcd.clear();            //Loading animation beacause why not
+        lcd.clear();            
         lcd.print("Loading");   // refer: https://github.com/MatthewSKC/arduino2.7int/commit/ad28c4e75fe6ab158ba2342b5c18635478b1f083
-        delay(300);
-        lcd.clear();
-        lcd.print("lOading");
-        delay(300);
-        lcd.clear();
-        lcd.print("loAding");
-        delay(300);
-        lcd.clear();
-        lcd.print("loaDing");
-        delay(300);
-        lcd.clear();
-        lcd.print("loadIng");
-        delay(300);
-        lcd.clear();
-        lcd.print("loadiNg");
-        delay(300);
-        lcd.clear();
-        lcd.print("loadinG");
-        delay(300);
-        lcd.clear();
-        lcd.print("LOADED!");
-        
-        delay(500);    
+
+        delay(1000);    
         
         int chk = DHT.read11(DHT11_PIN);    //takes measurements from temperature sensor
 
@@ -229,15 +228,14 @@ void loop () {
 
         delay(100);
 
-        lcd.print("Resetting");
+        lcd.print("ETT Notfications");
 
         delay(500);
 
-        digitalWrite(48, HIGH);
-
+        lcd.clear();
+        
       }
   
   delay(100);
-
 
 }
