@@ -1,3 +1,4 @@
+
 #include <Wire.h>                 // Wire.h is a first party libary
 #include <LiquidCrystal_I2C.h>    // LiquidCrystal_I2C.h is a third party libary for LCD over serial communication
 #include <dht.h>                  // dht.h is for the humidity temperature module (Third Party)
@@ -141,7 +142,7 @@ void loop () {
         lcd.clear();
 
       }
-      if(!key2S) {
+      if(!key2S) {                // this can only take 16 charcters at a time or else it will display foreign text
 
         Serial.println("Key 2 has been pressed");
         lcd.clear();
@@ -149,7 +150,7 @@ void loop () {
 
         delay(100);
 
-        lcd.print("Due Dates");
+        lcd.print("Due Date;");
 
         myFile = SD.open("DUEDATES.txt");
 
@@ -175,6 +176,8 @@ void loop () {
         else {
         // if the file didn't open, print an error:
         Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
         
         lcd.print("SD CARD REMOVED");
         
@@ -222,19 +225,249 @@ void loop () {
 
       if(!key4S) {
 
-        Serial.println("Key 4 has been pressed");
-        lcd.clear();
-
-
-        delay(100);
-
-        lcd.print("ETT Notfications");
-
-        delay(500);
-
         lcd.clear();
         
-      }
+        lcd.print("Monday;");
+
+        myFile = SD.open("MO.txt");
+
+        if (myFile) {
+          Serial.println("MO.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+
+            byte nextByte = myFile.read();
+            
+            lcd.print((char) nextByte);
+            Serial.write((char) nextByte);
+
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
+        }
+       
+      delay(3000);
+
+      lcd.clear();
+
+      delay(50);
+
+      lcd.print("Tuesday;");
+
+        myFile = SD.open("TU.txt");
+
+        if (myFile) {
+          Serial.println("TU.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+
+            byte nextByte = myFile.read();
+            
+            lcd.print((char) nextByte);
+            Serial.write((char) nextByte);
+
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
+        }
+
+      delay(3000);
+
+      lcd.clear();
+
+      lcd.print("Wensday;");
+
+        myFile = SD.open("WE.txt");
+
+        if (myFile) {
+          Serial.println("WE.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+
+            byte nextByte = myFile.read();
+            
+            lcd.print((char) nextByte);
+            Serial.write((char) nextByte);
+
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
+        }
+       
+
+      delay(3000);
+
+      lcd.clear();
+
+      lcd.print("Thursday;");
+
+        myFile = SD.open("TH.txt");
+
+        if (myFile) {
+          Serial.println("TH.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+
+            byte nextByte = myFile.read();
+            
+            lcd.print((char) nextByte);
+            Serial.write((char) nextByte);
+
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
+        }
+       
+
+      delay(3000);
+
+      lcd.clear();
+
+      lcd.print("Friday;");
+
+        myFile = SD.open("FR.txt");
+
+        if (myFile) {
+          Serial.println("FR.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+
+            byte nextByte = myFile.read();
+            
+            lcd.print((char) nextByte);
+            Serial.write((char) nextByte);
+
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
+        }
+       
+
+      delay(3000);
+
+      lcd.clear();
+
+      lcd.print("Sunday;");
+
+        myFile = SD.open("SU.txt");
+
+        if (myFile) {
+          Serial.println("SU.txt;");
+
+          lcd.setCursor(0,1);
+      
+          // read from the file until there's nothing else in it:
+          while (myFile.available()) {
+
+            byte nextByte = myFile.read();
+            
+            lcd.print((char) nextByte);
+            Serial.write((char) nextByte);
+
+          }
+
+          myFile.close();
+
+        }
+
+        else {
+        // if the file didn't open, print an error:
+        Serial.println("error opening DUEDATES.txt");
+
+        lcd.setCursor(0, 1);
+        
+        lcd.print("SD CARD REMOVED");
+        
+        delay(500);
+        
+        }
+       
+
+      delay(3000);
+
+      lcd.clear();
+
+   }
   
   delay(100);
 
