@@ -1,4 +1,3 @@
-
 #include <Wire.h>                 // Wire.h is a first party libary
 #include <LiquidCrystal_I2C.h>    // LiquidCrystal_I2C.h is a third party libary for LCD over serial communication
 #include <dht.h>                  // dht.h is for the humidity temperature module (Third Party)
@@ -16,6 +15,8 @@
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);    //I2C pins declaration
 
 dht DHT;    // start DHT Module
+
+File dataFile;
 
 RTC_DS1307 rtc;   // start rtc module
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};   //RTC Days of the week
@@ -102,7 +103,7 @@ void loop () {
 
         delay(1);
         
-        DateTime future (now + TimeSpan(0,12,0,0));
+        DateTime future (now + TimeSpan(0,12,-3,0));
 
         delay(100);
 
@@ -217,7 +218,23 @@ void loop () {
         delay(10);
         lcd.print(DHT.temperature);
 
-        delay(3000);
+        dataFile = SD.open("DHT11Log.txt", FILE_WRITE);
+          
+          Serial.print(":    Temperature = ");
+        Serial.print(DHT.temperature);
+        Serial.print("°C,    Humidity = ");
+        Serial.print(DHT.humidity);
+        Serial.println("%");
+        // Write data to SD card file (DHT11Log.txt)
+        dataFile.print("Temperature = ");
+        dataFile.print(DHT.temperature);
+        dataFile.print("°C,  Humidity = ");
+        dataFile.print(DHT.humidity);
+        dataFile.print("%");
+        dataFile.println();
+        dataFile.close();
+          
+delay(3000);
 
         lcd.clear();
         
@@ -252,7 +269,7 @@ void loop () {
 
         else {
         // if the file didn't open, print an error:
-        Serial.println("error opening DUEDATES.txt");
+        Serial.println("error opening MO.txt");
 
         lcd.setCursor(0, 1);
         
@@ -293,7 +310,7 @@ void loop () {
 
         else {
         // if the file didn't open, print an error:
-        Serial.println("error opening DUEDATES.txt");
+        Serial.println("error opening TU.txt");
 
         lcd.setCursor(0, 1);
         
@@ -332,7 +349,7 @@ void loop () {
 
         else {
         // if the file didn't open, print an error:
-        Serial.println("error opening DUEDATES.txt");
+        Serial.println("error opening WE.txt");
 
         lcd.setCursor(0, 1);
         
@@ -372,7 +389,7 @@ void loop () {
 
         else {
         // if the file didn't open, print an error:
-        Serial.println("error opening DUEDATES.txt");
+        Serial.println("error opening TH.txt");
 
         lcd.setCursor(0, 1);
         
@@ -412,7 +429,7 @@ void loop () {
 
         else {
         // if the file didn't open, print an error:
-        Serial.println("error opening DUEDATES.txt");
+        Serial.println("error opening FR.txt");
 
         lcd.setCursor(0, 1);
         
@@ -452,7 +469,7 @@ void loop () {
 
         else {
         // if the file didn't open, print an error:
-        Serial.println("error opening DUEDATES.txt");
+        Serial.println("error opening SU.txt");
 
         lcd.setCursor(0, 1);
         
