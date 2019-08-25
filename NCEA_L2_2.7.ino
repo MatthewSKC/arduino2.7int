@@ -103,11 +103,11 @@ void loop () {
 
         delay(1);
         
-        DateTime future (now + TimeSpan(0,12,-3,0));
+        DateTime future (now + TimeSpan(0,12,-3,0));    // Days, Hours, Minutes, Seconds -- Can have negitive intergers
 
         delay(100);
 
-        lcd.print("Time-");
+        lcd.print("Time-");                   // Note future.____ is used due to incorrectly setting up the module how ever it is easier to use for allowing it to be used in different time zones
         lcd.print(future.day(), DEC);
         lcd.print("/");
         lcd.print(future.month(), DEC);
