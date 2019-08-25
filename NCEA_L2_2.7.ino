@@ -1,3 +1,13 @@
+/*
+This is the code for an informational display for the JPC its main features are;
+- Requires a Interface where anyone can push a button and it gives relevant information
+    - Clock Sensor
+    - Temperature Sensor
+    - SD Card Reader
+    - 4 Button Membrane Keypad
+*/
+
+
 #include <Wire.h>                 // Wire.h is a first party libary
 #include <LiquidCrystal_I2C.h>    // LiquidCrystal_I2C.h is a third party libary for LCD over serial communication
 #include <dht.h>                  // dht.h is for the humidity temperature module (Third Party)
@@ -147,11 +157,11 @@ void loop () {
         lcd.clear();
 
       }
+  
       if(!key2S) {                // this can only take 16 charcters at a time or else it will display foreign text
 
         Serial.println("Key 2 has been pressed");
         lcd.clear();
-
 
         delay(100);
 
@@ -277,7 +287,7 @@ void loop () {
 
         lcd.setCursor(0, 1);
         
-        lcd.print("SD CARD REMOVED");
+        lcd.print("MO not found");
         
         delay(500);
         
@@ -318,7 +328,7 @@ void loop () {
 
         lcd.setCursor(0, 1);
         
-        lcd.print("SD CARD REMOVED");
+        lcd.print("TUE not found");
         
         delay(500);
         
@@ -357,7 +367,7 @@ void loop () {
 
         lcd.setCursor(0, 1);
         
-        lcd.print("SD CARD REMOVED");
+        lcd.print("WE not found");
         
         delay(500);
         
@@ -397,7 +407,7 @@ void loop () {
 
         lcd.setCursor(0, 1);
         
-        lcd.print("SD CARD REMOVED");
+        lcd.print("TH not found");
         
         delay(500);
         
@@ -437,7 +447,7 @@ void loop () {
 
         lcd.setCursor(0, 1);
         
-        lcd.print("SD CARD REMOVED");
+        lcd.print("FR not found");
         
         delay(500);
         
@@ -477,7 +487,7 @@ void loop () {
 
         lcd.setCursor(0, 1);
         
-        lcd.print("SD CARD REMOVED");
+        lcd.print("SU not found");
         
         delay(500);
         
