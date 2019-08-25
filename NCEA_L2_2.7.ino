@@ -38,7 +38,7 @@ void setup(){
  
   Serial.begin(57600);  // This is to confirm code is functioning on computer end
   
-  pinMode(key1, INPUT_PULLUP); // setting pins to only take input
+  pinMode(key1, INPUT_PULLUP); // setting pins to only take input and that they are technically classed as constantally on making need for the opposite of the value so ! is needed so we dont need to put buttons to ground
   pinMode(key2, INPUT_PULLUP);
   pinMode(key3, INPUT_PULLUP);
   pinMode(key4, INPUT_PULLUP);
@@ -88,10 +88,14 @@ void loop () {
   
   lcd.setCursor(0,0); //Defining positon to write from first row,first column .
   
-  int key1S = digitalRead(key1); // read if key 1 is pressed
-  int key2S = digitalRead(key2); // read if key 2 is pressed
-  int key3S = digitalRead(key3); // read if key 3 is pressed
-  int key4S = digitalRead(key4); // read if key 4 is pressed
+  int key1S = digitalRead(key1); // set keys to an interger value
+  int key2S = digitalRead(key2);
+  int key3S = digitalRead(key3);
+  int key4S = digitalRead(key4);
+  
+  lcd.print("JPC Info Device");
+  lcd.setCursor(0,1);
+  lcd.print("Press 1/2/3/4");
 
       if(!key1S) {
 
@@ -220,7 +224,7 @@ void loop () {
 
         dataFile = SD.open("DHT11Log.txt", FILE_WRITE);
           
-          Serial.print(":    Temperature = ");
+        Serial.print(":    Temperature = ");
         Serial.print(DHT.temperature);
         Serial.print("°C,    Humidity = ");
         Serial.print(DHT.humidity);
@@ -234,7 +238,7 @@ void loop () {
         dataFile.println();
         dataFile.close();
           
-delay(3000);
+        delay(3000);
 
         lcd.clear();
         
@@ -485,7 +489,5 @@ delay(3000);
       lcd.clear();
 
    }
-  
-  delay(100);
 
 }
